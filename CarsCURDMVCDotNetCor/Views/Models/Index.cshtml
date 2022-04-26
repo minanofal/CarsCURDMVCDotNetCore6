@@ -1,0 +1,98 @@
+﻿@model IEnumerable<DisplayModel>
+@{
+    ViewData["Title"] = "Models";
+}
+<h2>Models</h2>
+<hr />
+<a asp-action="Create" class="btn btn-primary" > <i class="bi bi-plus"></i> Create Model</a>
+
+<div class ="mt-4"> 
+    @if(!Model.Any()){
+       <div class="alert alert-dismissible alert-warning">
+            <h4 class="alert-heading">Warning!</h4>
+            <p class="mb-0"><i class="bi bi-exclamation-triangle"></i>  There Is No Models Yet !</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var car in Model)
+        {
+            <div class="card mb-3 col-12  d-flex flex-column justify-content-between animate__animated  animate__fadeInUp " style="height:270px;" >
+
+                <div class="row g-0">
+                <div class="col-md-4 ">
+                    @* <img src="data:image/*;base64,@(Convert.ToBase64String(car.Image))" class="Image" alt="Image" style="height:260px;  width:100%">*@
+                    <div style="background-image:url(data:image\/*;base64,@(Convert.ToBase64String(car.Image))); height:260px;  width:100% " class=" Image" ></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h4 class="card-title">@car.ModelName @car.Year</h4>
+                        <span class="card-text"> Makes : @car.MakesCompaneyName</span> <br>
+                        <span class="card-text"><i class="bi bi-cash-stack"></i> Price : @car.Price</span><br>
+                        <span class="card-text"> Category : @car.CategoryName</span><br>
+                        <span class="card-text"> Motor : @car.MotorCapacity <i class="bi bi-badge-cc-fill"></i> </span><br>
+                        <p class ="card-text text-justify">Discription: @(car.Discription.Length>200 ? $"{car.Discription.Substring(0,200)}...":car.Discription)</p>
+                        <div class="d-flex justify-content-between">
+                            &emsp;
+                            <div>
+                         <a asp-action="Details" asp-route-Id="@car.Id" class="btn btn-secondary">
+                            <i class="bi bi-arrow-up-left"></i> Details
+                        </a>
+                        <a asp-action="Edit" asp-route-Id="@car.Id" class="btn btn-outline-primary">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                       <a href="javascript:;" class="btn btn-danger m-1 js-delete" data-id="@car.Id">
+                           <i class="bi bi-trash3"></i> Delete
+                           </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    }
+
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            $('.js-delete').on('click',function(){
+                var btn = $(this);
+                bootbox.confirm({
+                    message: "Are You Sure Want To Delete This Model ?!",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-primary'
+                        }
+                    },
+                    callback: function (result) {
+                        if(result){
+                            $.ajax({
+                                url:'/Models/Delete/'+btn.data('id'),
+                                success : function(){
+                                    btn.parents('.col-12').removeClass(' animate__animated  animate__fadeInUp');
+                                    btn.parents('.col-12').addClass('animate__animated animate__backOutDown');
+                                    setTimeout(function(){
+                                        btn.parents('.col-12').remove();
+                                    },1000);
+                                    toastr.success('The Model Deleted Successfully');
+                                },
+                                error: function(){
+                                    toastr.error('Something Went Wrong !');
+                                }
+
+                            });
+                        }
+                        
+                    }
+                });
+            });
+        });
+    </script>
+}

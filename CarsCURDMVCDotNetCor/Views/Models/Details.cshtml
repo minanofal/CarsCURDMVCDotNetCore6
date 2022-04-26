@@ -1,0 +1,74 @@
+﻿@model ModelDetails 
+@{
+    ViewData["Title"] = Model.ModelName + " " + Model.Year;
+}
+<div class = "row justify-content-between mt-60-px">
+    <div class="col-md-5">
+        <img src = "data:image/*;base64,@(Convert.ToBase64String(Model.Image))" style="height 260px; width100%;" class = "img-thumbnail" alt="@Model.ModelName"/>
+    </div>
+    <div class="col-md-7">
+        <div class="d-flex justify-content-between mb-3">
+            <h3 >@Model.ModelName  @Model.Year</h3>
+            <h6 class="text-success"><i class="bi bi-cash-stack"></i> Price : @Model.Price EGP</h6><br>
+        </div>
+        <p class ="text-justify mt-3">@Model.Discription</p>
+    </div>
+    
+</div>
+<hr />
+<br />
+<div class="col-12 justify-content-between">
+    <table class="table table-hover">
+        <tbody>
+            <tr class="table-info">
+                <th scope="row"> Model</th>
+                <td>@Model.ModelName</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Year</th>
+                <td>@Model.Year</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Makes Companey</th>
+                <td>@Model.MakesCompaneyName</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Category</th>
+                <td>@Model.CategoryName</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Faul</th>
+                <td>@Model.Faul</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Price</th>
+                <td>@Model.Price EGP</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Motor</th>
+                <td>@Model.MotorCapacity CC</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row">Height </th>
+                <td>@Model.Hight Meter</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Width</th>
+                <td>@Model.Width Meter</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Tall</th>
+                <td>@Model.Tall Meter</td>
+            </tr>
+             <tr class="table-info">
+                <th scope="row"> Colors</th>
+                <td>
+                    @foreach(var item in Model.CarsColors)
+                    {
+                       <span>@item ,</span> 
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

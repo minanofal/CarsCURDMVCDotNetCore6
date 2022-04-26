@@ -1,0 +1,121 @@
+﻿@model ModelViewForm
+@{
+    ViewData["Title"] = "Model Form";
+}
+
+<h2> Create Model</h2>
+<hr />
+<section class="row justify-content-between">
+    <div class="col-md-4">
+        <form method = "post" asp-action="@(Model.Id>0?"Edit":"Create")" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ModelName" class=" col-form-label"></label>
+                 <input type="text" asp-for="ModelName" class="form-control"  />
+                  <span asp-validation-for="ModelName" class="text-danger"></span>
+             </div>
+              <div class="form-group">
+                <label asp-for="Hight" class=" col-form-label"></label>
+                 <input type="number" asp-for="Hight" class="form-control"  />
+                  <span asp-validation-for="Hight" class="text-danger"></span>
+             </div>
+              <div class="form-group">
+                <label asp-for="MotorCapacity" class=" col-form-label"></label>
+                 <input type="number" asp-for="MotorCapacity" class="form-control"  />
+                  <span asp-validation-for="MotorCapacity" class="text-danger"></span>
+             </div>
+              <div class="form-group">
+                <label asp-for="Width" class=" col-form-label"></label>
+                 <input type="number" asp-for="Width" class="form-control"  />
+                  <span asp-validation-for="Width" class="text-danger"></span>
+             </div>
+              <div class="form-group">
+                <label asp-for="Tall" class=" col-form-label"></label>
+                 <input type="number" asp-for="Tall" class="form-control"  />
+                  <span asp-validation-for="Tall" class="text-danger"></span>
+             </div>
+              <div class="form-group">
+                <label asp-for="Price" class=" col-form-label"></label>
+                 <input type="number" asp-for="Price" class="form-control"  />
+                  <span asp-validation-for="Price" class="text-danger"></span>
+             </div>
+             <div class="form-group">
+                <label asp-for="Year" class=" col-form-label"></label>
+                 <input type="number" asp-for="Year" class="form-control" value="@(Model.Year>0 ? Model.Year :string.Empty)"  />
+                  <span asp-validation-for="Year" class="text-danger"></span>
+             </div>
+                <div class="form-group">
+                <label asp-for="Discription" class=" col-form-label"></label>
+                 <textarea asp-for="Discription" class="form-control"  rows="4" ></textarea>
+                  <span asp-validation-for="Discription" class="text-danger"></span>
+             </div>
+             <div class="form-group">
+                <label asp-for="Faul" class=" col-form-label"></label>
+                <select class="form-select" asp-for="Faul" asp-items="@(new SelectList(Model.Fauls))">
+                    <option></option>
+                </select>
+                <span asp-validation-for="Faul" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="CategoryId" class=" col-form-label"></label>
+                <select class="form-select" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))">
+                    <option></option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="MakesCompaneyId" class=" col-form-label"></label>
+                <select class="form-select" asp-for="MakesCompaneyId" asp-items="@(new SelectList(Model.MakesCompaneys,"Id","Name"))">
+                    <option></option>
+                </select>
+                <span asp-validation-for="MakesCompaneyId" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="CarsColors" class=" col-form-label"></label>
+                <select   class="form-select" asp-for="CarsColors" asp-items="@(new SelectList(Model.CarsColorsList))" multiple>
+                    <option></option>
+                </select>
+                <span asp-validation-for="CarsColors" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Image" class="form-label"></label>
+                 <input asp-for="@Model.Image" class="form-control" type="file" accept=".png , .jpg" >
+                 <span asp-validation-for="@Model.Image" class="text-danger"></span>
+            </div>
+                
+            
+             <button type="submit" class="btn btn-primary col-3 mt-3"> <i class="bi bi-check-lg"></i> Save</button>
+             <a asp-action="Index" class="btn btn-secondary col-3 mt-3"> <i class="bi bi-x-square-fill"></i> Cansel</a>
+        </form>
+    </div>
+      <div class="col-md-4" style="position:fixed;  left:1000px">
+        <div id= "image-container" class="@(Model.Id>0?string.Empty: "d-none")">
+            <img src="@(@Model.Id>0 ? $"data:image/*;base64,{Convert.ToBase64String(Model.Image)}":string.Empty)" class="img-thumbnail" alt="Image" />
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function(){
+                $('#Year').datepicker({
+                format: 'yyyy',
+                viewMode: 'years',
+                minViewMode:'years',
+                autoclose: true,
+                startDate : new Date('1990-01-01'),
+                endDate: new Date()
+            });
+            $('#Image').on('change',function(){
+                    var selectedfile=$(this).val().split('\\').pop();
+
+                    var imagecontainer = $('#image-container');
+                    var img = window.URL.createObjectURL(this.files[0]);
+
+                    imagecontainer.removeClass('d-none');
+                    imagecontainer.find('img').attr('src',img);
+                });
+        });
+        </script>
+}

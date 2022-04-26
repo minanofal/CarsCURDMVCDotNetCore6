@@ -1,0 +1,55 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/*//////////*/
+.Image {
+    min-width: 300px;
+    min-height: 170px;
+    background-size: 100%;
+    transition: all 0.3s ease-in-out;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+    .Image:hover {
+        background-size: 120%;
+        transition: all 0.3s ease-in-out;
+    }
+.Imagec {
+    min-width: 100%;
+    min-height: 200px;
+    /*background-size: 100%;*/
+    transition: all 0.3s ease-in-out;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+    .Imagec:hover {
+        background-size: 55%;
+        transition: all 0.3s ease-in-out;
+    }
+
+.CarImage {
+    transition: all 0.3s ease-in-out;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+    .CarImage:hover {
+    background-size: 55%;
+    transition: all 0.3s ease-in-out;
+    }
