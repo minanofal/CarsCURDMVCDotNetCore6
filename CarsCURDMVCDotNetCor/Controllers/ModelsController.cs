@@ -116,7 +116,8 @@ namespace CarsCURDMVCDotNetCor.Controllers
             var colors = new List<CarsColor>();
             foreach (var item in model.CarsColors)
             {
-                colors.Add(new CarsColor() { CarModelId = car, Color = item });
+                if(item !=null)
+                    colors.Add(new CarsColor() { CarModelId = car, Color = item });
             }
             _context.carsColors.AddRange(colors);
 
