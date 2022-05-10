@@ -16,5 +16,9 @@ there is relation between category and Make Companey
 		(maney-to-maney)
 car can has number of colors 
 		(one-to-maney)
+		
+**********************************************
+Edite The Database Connection in appsetting.json 
+the command update-database 
 
 
